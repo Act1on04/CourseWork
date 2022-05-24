@@ -14,11 +14,6 @@ int main()
 {
   setlocale(LC_ALL,"Rus");
 
-	// Test fill plant
-	// plant new_plant;
-	// fill_plant(&new_plant);
-	// print_plant(&new_plant);
-	
 	plant_queue plants_queue;
 	plant_queue* garden = &plants_queue;
 	init_plant_queue(garden);

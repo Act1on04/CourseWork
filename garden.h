@@ -227,9 +227,8 @@ swap_plants_point(plant_queue* queue, plant* prev_plant, plant* cur_plant, plant
 {
   if (prev_plant == NULL) queue->first = next_plant;
   else prev_plant->next = next_plant;
-  plant* temp = next_plant->next;
+  cur_plant->next = next_plant->next;
   next_plant->next = cur_plant;
-  cur_plant->next = temp;
 }
 
 plant* get_plant_by_index(plant_queue* queue, int index)
@@ -253,11 +252,11 @@ void sort_by_estimated_cost(plant_queue* queue)
     SIZE++;
     cur_plant = cur_plant->next;
   }
-  printf("size of plant_queue: %d\n", SIZE);
   
   for (int i = 0; i < SIZE - 1; i++)
     for (int j = SIZE - 1; j > i; j--) 
       if (get_plant_by_index(queue, j)->estimated_cost < get_plant_by_index(queue, j - 1)->estimated_cost)
         swap_plants_point(queue, get_plant_by_index(queue, j-2), get_plant_by_index(queue, j-1), get_plant_by_index(queue, j));
-  printf("\n[+] Sorting by estimated cost...\n");
+  printf("\n[+] Sorted by estimated cost");
+  print_plant_queue(queue);
 }

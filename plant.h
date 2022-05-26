@@ -16,13 +16,13 @@ int get_num(char* message);
 //with name, type, inventory number, lot number, year of planting, estimated cost, gardener, plant watering map.
 typedef struct plant_st
 {
-  char name[30];
-  char type[20];
+  char name[20];
+  char type[15];
   unsigned inventory_number;
   unsigned planting_site;
   unsigned year_of_planting;
   float estimated_cost;
-  char gardener[30];
+  char gardener[20];
   unsigned plant_watering_map;
   struct plant_st* next;
 } plant;
@@ -37,10 +37,10 @@ void fill_plant(plant* p)
 {
   // printf("\nEnter the name of the plant: ");
   // scanf("%s", p->name);
-  get_str(p->name, 30, "\nEnter the NAME of the plant (only letters and -): ");
+  get_str(p->name, 20, "\nEnter the NAME of the plant (only letters and -): ");
   // printf("Enter the type of the plant: ");
   // scanf("%s", p->type);
-  get_str(p->type, 20, "Enter the TYPE of the plant (only letters and -): ");
+  get_str(p->type, 15, "Enter the TYPE of the plant (only letters and -): ");
   // printf("Enter the INVENTORY number: ");
   // scanf("%u", &p->inventory_number);
   p->inventory_number = get_num("Enter the INVENTORY number : ");
@@ -52,7 +52,7 @@ void fill_plant(plant* p)
   scanf("%f", &p->estimated_cost);
   // printf("Enter the name of the gardener: ");
   // scanf("%s", p->gardener);
-  get_str(p->gardener, 30, "Enter the NAME of the GARDENER (only letters and -): ");
+  get_str(p->gardener, 15, "Enter the NAME of the GARDENER (only letters and -): ");
   p->plant_watering_map = get_plant_watering_map();
 }
 

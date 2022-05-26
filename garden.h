@@ -32,6 +32,7 @@ void add_plant(plant_queue* queue) {
 
 int delete_plant_queue(plant_queue* queue) {
   if (queue->first == NULL) {
+    printf("\n[-] Garden is empty!\n");
     return 0;
   } else {
     plant* first = queue->first;

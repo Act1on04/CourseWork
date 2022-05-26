@@ -22,7 +22,7 @@ typedef struct plant_st
   unsigned planting_site;
   unsigned year_of_planting;
   float estimated_cost;
-  char gardener[20];
+  char gardener[15];
   unsigned plant_watering_map;
   struct plant_st* next;
 } plant;

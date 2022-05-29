@@ -30,16 +30,14 @@ void add_plant(plant_queue* queue) {
   printf("\n[+] Add the plant to the garden successfully!\n");
 }		
 
-int delete_plant_queue(plant_queue* queue) {
+void delete_plant_queue(plant_queue* queue) {
   if (queue->first == NULL) {
     printf("\n[-] Garden is empty!\n");
-    return 0;
   } else {
     plant* first = queue->first;
     queue->first = queue->first->next;
     free(first);
     printf("\n[+] Remove the plant from the garden successfully!\n");
-    return 1;
   }
 }
 

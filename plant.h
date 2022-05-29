@@ -11,6 +11,7 @@ int get_year_plant();
 int get_plant_watering_map();
 void get_str(char* str, unsigned size, char* message);
 int get_num(char* message);
+float get_float(char* message);
 
 //type of structure for a plant in a botanical garden 
 //with name, type, inventory number, lot number, year of planting, estimated cost, gardener, plant watering map.
@@ -43,13 +44,14 @@ void fill_plant(plant* p)
   get_str(p->type, 15, "Enter the TYPE of the plant (only letters and -): ");
   // printf("Enter the INVENTORY number: ");
   // scanf("%u", &p->inventory_number);
-  p->inventory_number = get_num("Enter the INVENTORY number : ");
+  p->inventory_number = get_num("Enter the INVENTORY number (above zero): ");
   // printf("Enter the planting SITE number: ");
   // scanf("%u", &p->planting_site);
-  p->planting_site = get_num("Enter the planting SITE number : ");
+  p->planting_site = get_num("Enter the planting SITE number (above zero): ");
   p->year_of_planting = get_year_plant();
-  printf("Enter the estimated COST of the plant (XXXX,XX): ");
-  scanf("%f", &p->estimated_cost);
+  // printf("Enter the estimated COST of the plant (XXXX,XX): ");
+  // scanf("%f", &p->estimated_cost);
+  p->estimated_cost = get_float("Enter the estimated COST of the plant (XXXX,XX and above zero): ");
   // printf("Enter the name of the gardener: ");
   // scanf("%s", p->gardener);
   get_str(p->gardener, 15, "Enter the NAME of the GARDENER (only letters and -): ");
@@ -112,5 +114,14 @@ int get_num(char* message) {
     printf("%s", message);
     scanf("%d", &num);
   } while (num < 1);
+  return num;
+}
+
+float get_float(char* message) {
+  float num; 
+  do {
+    printf("%s", message);
+    scanf("%f", &num);
+  } while (num < 0);
   return num;
 }

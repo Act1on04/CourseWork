@@ -183,7 +183,6 @@ void print_plants_same_watermap(plant_queue* queue)
 // Print full information about a plant for a given inventory number
 void print_plant_for_inventory_number(plant_queue* queue) 
 {
-  int num = 0;
   unsigned inventory_number;
   inventory_number = get_num("Enter the INVENTORY number : ");
   plant* cur_plant = queue->first;
@@ -205,7 +204,6 @@ void print_plant_for_inventory_number(plant_queue* queue)
 // Calculation of the total cost of plants on same planting site
 void print_total_cost_plants_same_site(plant_queue* queue) 
 {
-  int num = 0;
   unsigned planting_site;
   planting_site = get_num("Enter the PLANTING SITE number : ");
   plant* cur_plant = queue->first;
@@ -222,7 +220,7 @@ void print_total_cost_plants_same_site(plant_queue* queue)
   }
 }
 
-swap_plants_point(plant_queue* queue, plant* prev_plant, plant* cur_plant, plant* next_plant)
+void swap_plants_point(plant_queue* queue, plant* prev_plant, plant* cur_plant, plant* next_plant)
 {
   if (prev_plant == NULL) queue->first = next_plant;
   else prev_plant->next = next_plant;

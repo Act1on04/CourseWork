@@ -52,7 +52,6 @@ int edit_plant_in_queue(plant_queue* queue) {
       printf("\nLet`s edit Plant:");
       fill_plant(cur_plant);
       printf("\n[+] Plant edited successfully!");
-      return 1;
     }
     cur_plant = cur_plant->next;
   }

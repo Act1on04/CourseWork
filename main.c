@@ -73,7 +73,6 @@ int main()
 				break;
 			default:
 				printf(" Wrong choice!\n");
-				press_exit = false;
 		}
 		if (!press_exit)
       printf("\n\nPress any key to continue...\n");

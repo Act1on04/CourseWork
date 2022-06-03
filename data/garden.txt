@@ -3,3 +3,4 @@ Asparagales Orchid 2 2 2022 350,00 Ivanov 2
 Romashka Polevie 3 2 2021 20,50 Ivanov 1 
 Apple Rosaceae 4 6 1990 300,40 Petrov 3 
 Rose Koluchka 5 3 2020 150,00 Petrov 1 
+Pihta Hvoya 6 6 2000 1200,00 Petrov 1 

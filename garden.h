@@ -262,16 +262,22 @@ plant* get_plant_by_index(plant_queue* queue, int index)
   return NULL;
 }
 
+// Функция вычисляет количество элементов в очереди
+int get_queue_size(plant_queue* queue)
+{
+  int size = 0;
+  plant* cur_plant = queue->first;
+  while (cur_plant != NULL) {
+    size++;
+    cur_plant = cur_plant->next;
+  }
+  return size;
+}
+
 //Sort by estimated cost
 void sort_by_estimated_cost(plant_queue* queue) 
 {
-  int SIZE = 0;
-  plant* cur_plant = queue->first;
-  while (cur_plant != NULL) {
-    SIZE++;
-    cur_plant = cur_plant->next;
-  }
-  
+  int SIZE = get_queue_size(queue);
   for (int i = 0; i < SIZE - 1; i++)
     for (int j = SIZE - 1; j > i; j--) 
       if (get_plant_by_index(queue, j)->estimated_cost < get_plant_by_index(queue, j - 1)->estimated_cost)

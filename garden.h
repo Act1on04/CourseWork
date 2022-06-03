@@ -119,12 +119,12 @@ void print_plants_same_type(plant_queue* queue)
 {
   int num = 0;
   char type[15];
-  get_str(type, 15, "Enter the TYPE of the plants you want print (only letters and -): ");
   plant* cur_plant = queue->first;
   if (cur_plant == NULL) {
     printf("\n[-] Garden is empty!\n");
   } else 
   {
+    get_str(type, 15, "Enter the TYPE of the plants you want print (only letters and -): ");
     printf("\n[+] Plants of type %s in Garden:", type);
     print_shapka();
     while (cur_plant != NULL) {
@@ -139,12 +139,12 @@ void print_plants_same_gardener(plant_queue* queue)
 {
   int num = 0;
   char gardener[15];
-  get_str(gardener, 15, "Enter the NAME of the GARDENER you want print (only letters and -): ");
   plant* cur_plant = queue->first;
   if (cur_plant == NULL) {
     printf("\n[-] Garden is empty!\n");
   } else 
   {
+    get_str(gardener, 15, "Enter the NAME of the GARDENER you want print (only letters and -): ");
     printf("\n[+] Plants of GARDENER %s in Garden:", gardener);
     print_shapka();
     while (cur_plant != NULL) {
@@ -160,14 +160,14 @@ void print_plants_for_year(plant_queue* queue)
   int num = 0;
   int before_after = 1;
   unsigned year;
-  year = get_year_plant();
-  printf("Enter 0-before or 1-after the year %4d of planting plants you want print (0 or 1): ", year);
-  scanf("%d", &before_after);
   plant* cur_plant = queue->first;
   if (cur_plant == NULL) {
     printf("\n[-] Garden is empty!\n");
   } else 
   {
+    year = get_year_plant();
+    printf("Enter 0-before or 1-after the year %4d of planting plants you want print (0 or 1): ", year);
+    scanf("%d", &before_after);
     if (before_after == 0) {
       printf("\n[+] Plants before the year %4d in Garden:", year);
     } else {
@@ -187,12 +187,12 @@ void print_plants_same_watermap(plant_queue* queue)
 {
   int num = 0;
   unsigned watermap;
-  watermap = get_plant_watering_map();
   plant* cur_plant = queue->first;
   if (cur_plant == NULL) {
     printf("\n[-] Garden is empty!\n");
   } else 
   {
+    watermap = get_plant_watering_map();
     printf("\n[+] Plants that need to be watered at %s:", plant_map[watermap-1]);
     print_shapka();
     while (cur_plant != NULL) {
@@ -206,12 +206,12 @@ void print_plants_same_watermap(plant_queue* queue)
 void print_plant_for_inventory_number(plant_queue* queue) 
 {
   unsigned inventory_number;
-  inventory_number = get_num("Enter the INVENTORY number : ");
   plant* cur_plant = queue->first;
   if (cur_plant == NULL) {
     printf("\n[-] Garden is empty!\n");
   } else 
   {
+    inventory_number = get_num("Enter the INVENTORY number : ");
     printf("\n[+] Plant with inventory number %d in Garden:", inventory_number);
     while (cur_plant != NULL) {
       if (cur_plant->inventory_number == inventory_number) {
@@ -227,12 +227,12 @@ void print_plant_for_inventory_number(plant_queue* queue)
 void print_total_cost_plants_same_site(plant_queue* queue) 
 {
   unsigned planting_site;
-  planting_site = get_num("Enter the PLANTING SITE number : ");
   plant* cur_plant = queue->first;
   if (cur_plant == NULL) {
     printf("\n[-] Garden is empty!\n");
   } else 
   {
+    planting_site = get_num("Enter the PLANTING SITE number : ");
     float total_cost = 0;
     while (cur_plant != NULL) {
       if (cur_plant->planting_site == planting_site) total_cost += cur_plant->estimated_cost;

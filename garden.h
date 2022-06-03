@@ -3,61 +3,81 @@
 
 #include "plant.h"
 
+// Структура типа очередь. В ней прописаны указатели на
 typedef struct plant_queue_st  {
   plant* first;
   plant* last;
 } plant_queue;
 
+// Функция инициализации очереди
 void init_plant_queue(plant_queue* queue) {
   queue->first = NULL;
   queue->last = NULL;
 }
 
+// Функция добавления элемента в очередь
 void add_plant_queue(plant_queue* queue, plant* new_plant) {
-  new_plant->next = NULL;
+  // Если очередь пустая, то добавляем в неё первый элемент.
+  // А если не пустая, то последнему элементу добавляем указатель на новый элемент.
   if (queue->first == NULL) {
     queue->first = new_plant;
   } else {
     queue->last->next = new_plant;
   }
+  // После добавления последним элементом становится новый элемент.
   queue->last = new_plant;
+  new_plant->next = NULL;
 }
 
+// Функция создаёт новое растение и добавляет его в Сад
 void add_plant(plant_queue* queue) {
+  // Создаём новое растение
   plant* new_plant = create_plant();
+  // Заполняем его данными
   fill_plant(new_plant);
+  // Добавляем его в очередь
   add_plant_queue(queue, new_plant);
   printf("\n[+] Add the plant to the garden successfully!\n");
 }		
 
+// Функция удаляет растение из очереди
 void delete_plant_queue(plant_queue* queue) {
   if (queue->first == NULL) {
     printf("\n[-] Garden is empty!\n");
   } else {
+    // Временно сохраняем указатель на первый элемент очереди
+    // это позволит нам не потерять его при назначении нового первого элемента очереди
     plant* first = queue->first;
+    // Присваиваем первому элементу очереди указатель на следующий элемент после первого
     queue->first = queue->first->next;
+    // теперь, имея сохранённый указатель, можем удалить из памяти бывший первый элемент очереди
     free(first);
     printf("\n[+] Remove the plant from the garden successfully!\n");
   }
 }
 
+// Функция редактирует растение в очереди по инвентарному номеру
 int edit_plant_in_queue(plant_queue* queue) {
   unsigned inventory_number;
   inventory_number = get_num("Enter the INVENTORY number of plant for edit: ");
+  // Перебираем все элементы очереди пока не найдём тот, который нужно редактировать 
   plant* cur_plant = queue->first;
   while (cur_plant != NULL) {
+    // Если нашли элемент с таким инвентарным номером, то редактируем его и выходим из функции
     if (cur_plant->inventory_number == inventory_number) {
       printf("\nPlant with inventory number %d in Garden:", inventory_number);
       print_plant(cur_plant);
       printf("\nLet`s edit Plant:");
       fill_plant(cur_plant);
       printf("\n[+] Plant edited successfully!");
+      return EXIT_SUCCESS;
     }
     cur_plant = cur_plant->next;
   }
+  // если прошли до конца цикла, значит не нашли элемент с таким инвентарным номером
   printf("\n[-] Plant with inventory number %d not found in Garden!\n", inventory_number);
 
-  return 0;
+  return EXIT_SUCCESS;
 }
 
 void print_shapka()
@@ -68,15 +88,18 @@ void print_shapka()
   printf("\n-----------------------------------------------------------------------------------------------------------");
 }
 
+// Функция просто распечатывает растение в табличном виде
 void print_stroka(unsigned num, plant* cur_plant)
 {
   printf("\n|%-3d|%-20s|%-15s|%9d|%6d|%8d|%9.2f|%-15s|%-12s|", num, cur_plant->name, cur_plant->type, cur_plant->inventory_number, cur_plant->planting_site, cur_plant->year_of_planting, cur_plant->estimated_cost, cur_plant->gardener, plant_map[cur_plant->plant_watering_map-1]);
   printf("\n-----------------------------------------------------------------------------------------------------------");
 }
 
-// Print all plants in the garden
+// Функция выводит все растения в Саду-очереди в табличном виде
 void print_plant_queue(plant_queue* queue) {
   int num = 0;
+  // Проверяем не пуста ли очередь
+  // Если не пуста, то выводим все элементы очереди
   plant* cur_plant = queue->first;
   if (cur_plant == NULL) {
     printf("\n[-] Garden is empty!\n");

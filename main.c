@@ -14,7 +14,8 @@ int main()
 {
   setlocale(LC_ALL,"Rus");
 
-	plant_queue plants_queue;
+	// создаём Сад (структура типа очередь) для растений и подгружаем данные из файла
+  plant_queue plants_queue;
 	plant_queue* garden = &plants_queue;
 	init_plant_queue(garden);
   LoadGardenFromFile(garden);
@@ -85,6 +86,12 @@ int main()
 	return EXIT_SUCCESS;
 }
 
+// Загрузка данных из текстового файла.
+// В каждой строке файла записаны данные о одном объекте типа plant.
+// Данные считываются из файла последовательно, 
+// тем самым позволяя восстановить очерёдность очереди.
+// Не использовал бинарные файлы т.к. с работой с ними ознакомился уже после написания этого кода
+// и текстовый файл был удобнее в плане манипулирования данными в ручном режиме
 void LoadGardenFromFile(plant_queue* queue)
 {
   FILE *data_file = fopen("garden.txt", "r");
@@ -122,6 +129,10 @@ void LoadGardenFromFile(plant_queue* queue)
   fclose(data_file);
 }
 
+// Загрузка данных в текстовый файл.
+// В каждой строке файла записаны данные о одном объекте типа plant.
+// Данные записываются последовательно в файл тем самым позволяя сохранить очерёдность очереди,
+// т.к. записывать в файл указатели на объекты нельзя
 void SaveGardenToFile(plant_queue* queue)
 {
   FILE *data_file = fopen("garden.txt", "w");

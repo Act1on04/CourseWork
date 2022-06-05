@@ -14,13 +14,17 @@ int main()
 {
   setlocale(LC_ALL,"Rus");
 
-	// создаём Сад (структура типа очередь) для растений и подгружаем данные из файла
+	// создаём Сад (структура типа очередь) для растений и указатель на него,
   plant_queue plants_queue;
 	plant_queue* garden = &plants_queue;
+  // инициализируем очередь нулевыми значениями, т.к. она ещё пустая
 	init_plant_queue(garden);
+  // затем заполняем очередь данными из файла
   LoadGardenFromFile(garden);
 
 	bool press_exit = false;
+  // зацикливаем меню пока пользователь не выберет пункт меню 12 (выход) 
+  // и значение press_exit не поменяется на true
 	while (!press_exit)
 	{
 		switch (choice_menu())
@@ -79,9 +83,11 @@ int main()
       printf("\n\nPress any key to continue...\n");
 		else
       printf("\n Goodbye!\n");
+    // тут просто жду нажатия любой клавиши, чтобы надписи не пропадали сразу
     getch();
   }
   
+  // на выходе из программы записываем в файл данные из очереди
   SaveGardenToFile(garden);
 	return EXIT_SUCCESS;
 }
@@ -111,7 +117,7 @@ void LoadGardenFromFile(plant_queue* queue)
   }
   while (fscanf(data_file, "%s %s %u %u %u %f %s %u ", name, type, &inventory_number, &planting_site, &year_of_planting, &estimated_cost, gardener, &plant_watering_map) != EOF)
   {
-
+    // Создаю новый объект типа plant и заполняю его данными из файла
     plant* new_plant = create_plant();
 
     strcpy(new_plant->name, name);
@@ -122,7 +128,8 @@ void LoadGardenFromFile(plant_queue* queue)
     new_plant->estimated_cost = estimated_cost;
     strcpy(new_plant->gardener, gardener);
     new_plant->plant_watering_map = plant_watering_map;
-
+    
+    // после добавляю этот объект в очередь
     add_plant_queue(queue, new_plant);
   }
   
@@ -132,26 +139,26 @@ void LoadGardenFromFile(plant_queue* queue)
 // Загрузка данных в текстовый файл.
 // В каждой строке файла записаны данные о одном объекте типа plant.
 // Данные записываются последовательно в файл тем самым позволяя сохранить очерёдность очереди,
-// т.к. записывать в файл указатели на объекты нельзя
+// т.к. сохранять в файле указатели на объекты нельзя
 void SaveGardenToFile(plant_queue* queue)
 {
   FILE *data_file = fopen("garden.txt", "w");
   if (data_file != NULL)
   {
+    // перебираю все элементы очереди и сохраняю их в файл
     plant* cur_plant = queue->first;
-    if (cur_plant != NULL) 
-      while (cur_plant != NULL) {
-        fprintf(data_file,"%s ", cur_plant->name);
-        fprintf(data_file,"%s ", cur_plant->type);
-        fprintf(data_file,"%d ", cur_plant->inventory_number);
-        fprintf(data_file,"%d ", cur_plant->planting_site);
-        fprintf(data_file,"%d ", cur_plant->year_of_planting);
-        fprintf(data_file,"%.2f ", cur_plant->estimated_cost);
-        fprintf(data_file,"%s ", cur_plant->gardener);
-        fprintf(data_file,"%d ", cur_plant->plant_watering_map);
-        fprintf(data_file,"\n");
-        cur_plant = cur_plant->next;
-      }
+    while (cur_plant != NULL) {
+      fprintf(data_file,"%s ", cur_plant->name);
+      fprintf(data_file,"%s ", cur_plant->type);
+      fprintf(data_file,"%d ", cur_plant->inventory_number);
+      fprintf(data_file,"%d ", cur_plant->planting_site);
+      fprintf(data_file,"%d ", cur_plant->year_of_planting);
+      fprintf(data_file,"%.2f ", cur_plant->estimated_cost);
+      fprintf(data_file,"%s ", cur_plant->gardener);
+      fprintf(data_file,"%d ", cur_plant->plant_watering_map);
+      fprintf(data_file,"\n");
+      cur_plant = cur_plant->next;
+    }
   }
   else
   {

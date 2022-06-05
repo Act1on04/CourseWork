@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Функция выбора пункта меню
 int choice_menu()
 {
   int choice;

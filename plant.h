@@ -13,8 +13,10 @@ void get_str(char* str, unsigned size, char* message);
 int get_num(char* message);
 float get_float(char* message);
 
-//type of structure for a plant in a botanical garden 
-//with name, type, inventory number, lot number, year of planting, estimated cost, gardener, plant watering map.
+// Структура для объекта растение в ботаническом саду 
+// с именем, видом, инвентарным номером, номером садового участка, годом посадки,
+// оценочной стоимостью, именем садовника и картой полива
+// плюс указатель на следующий объект
 typedef struct plant_st
 {
   char name[20];
@@ -28,37 +30,27 @@ typedef struct plant_st
   struct plant_st* next;
 } plant;
 
+// функция создаёт новую структуру типа растение и выделяет память под неё
+// возвращает указатель на созданную структуру
 plant* create_plant() {
   plant* new_plant = malloc(sizeof(plant));
   return new_plant;
 }
 
-//function to fill the plant structure with data
+// функция заполняет структуру типа растение данными
 void fill_plant(plant* p)
 {
-  // printf("\nEnter the name of the plant: ");
-  // scanf("%s", p->name);
   get_str(p->name, 20, "\nEnter the NAME of the plant (only letters and -): ");
-  // printf("Enter the type of the plant: ");
-  // scanf("%s", p->type);
   get_str(p->type, 15, "Enter the TYPE of the plant (only letters and -): ");
-  // printf("Enter the INVENTORY number: ");
-  // scanf("%u", &p->inventory_number);
   p->inventory_number = get_num("Enter the INVENTORY number (above zero): ");
-  // printf("Enter the planting SITE number: ");
-  // scanf("%u", &p->planting_site);
   p->planting_site = get_num("Enter the planting SITE number (above zero): ");
   p->year_of_planting = get_year_plant();
-  // printf("Enter the estimated COST of the plant (XXXX,XX): ");
-  // scanf("%f", &p->estimated_cost);
   p->estimated_cost = get_float("Enter the estimated COST of the plant (XXXX,XX and above zero): ");
-  // printf("Enter the name of the gardener: ");
-  // scanf("%s", p->gardener);
   get_str(p->gardener, 15, "Enter the NAME of the GARDENER (only letters and -): ");
   p->plant_watering_map = get_plant_watering_map();
 }
 
-//function to print the plant structure
+// Функция выводит на экран данные структуры типа растение
 void print_plant(plant* p)
 {
   printf("\n Name: %s", p->name);
@@ -74,8 +66,12 @@ void print_plant(plant* p)
 
 //получить текущий год
 int get_current_year() {
+  // получаем текущее время в виде количества секунд от 01.01.1970
   time_t t = time(NULL);
+  // преобразуем их в локальное время и сохраняем во временнУю структуру tm
   struct tm tm = *localtime(&t);
+  // и так как в структуре tm год хранится как Количество лет с 1900, 
+  // то прибавляем 1900 для получения текущего года
   return tm.tm_year + 1900;
 }
 
@@ -85,6 +81,7 @@ int get_year_plant() {
   do {
     printf("Enter the year of planting (1500 - current year): ");
     scanf("%d", &year);
+    // если введённый год меньше 1500 или больше текущего года, то просим ввести заново 
   } while (year < 1500 || year > get_current_year());
   return year;
 }
@@ -95,6 +92,7 @@ int get_plant_watering_map() {
   do {
     printf("Enter the plant watering map (Morning-1 Afternoon-2 Evening-3): ");
     scanf("%d", &map);
+    // введённое значение не должно выходить за рамки перечисленных значений в справочнике
   } while (map < 1 || map > MAP_COUNT);
   return map;
 }
@@ -104,10 +102,12 @@ void get_str(char* str, unsigned size, char* message) {
   do {
     printf("%s", message);
     scanf("%s", str);
+    // проверяем введённую строку на наличие недопустимых символов
+    // и длину - не менее чем 2 символа и не больше указанной в параметре size
   } while (strpbrk(str, "0123456789") != NULL || strlen(str) < 2 || strlen(str) > size );
 }
 
-//ввод номера с проверкой на значение больше 0
+//ввод номера с проверкой чтобы значение было больше нуля
 int get_num(char* message) {
   int num; 
   do {
@@ -117,6 +117,7 @@ int get_num(char* message) {
   return num;
 }
 
+// ввод ориетировочной цены с проверкой чтобы значение не было отрицательным 
 float get_float(char* message) {
   float num; 
   do {
